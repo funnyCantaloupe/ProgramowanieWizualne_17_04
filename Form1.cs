@@ -25,7 +25,7 @@ namespace ProgramowanieWizualne_17_04
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog of = new OpenFileDialog();
-            //For any other formats
+            
             of.Filter = "Image Files (*.bmp;*.jpg;*.jpeg,*.png)|*.BMP;*.JPG;*.JPEG;*.PNG";
             if (of.ShowDialog() == DialogResult.OK)
             {
@@ -42,16 +42,25 @@ namespace ProgramowanieWizualne_17_04
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            Bitmap bitmap = new Bitmap(pictureBox1.Image);
+            Bitmap flippedBitmap = new Bitmap(bitmap.Width, bitmap.Height); 
+            Graphics gfx = Graphics.FromImage(flippedBitmap);
+            gfx.Clear(Color.White); 
+            gfx.ScaleTransform(-1, 1); 
+            gfx.TranslateTransform(-bitmap.Width, 0); 
+            gfx.DrawImage(bitmap, new Point(0, 0));
+            pictureBox1.Image = flippedBitmap;
+            gfx.Dispose();
+            bitmap.Dispose();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             
                 Bitmap bitmap = new Bitmap(pictureBox1.Image);
-                Bitmap rotatedBitmap = new Bitmap(bitmap.Height, bitmap.Width); // Tworzenie nowego obrazka o obróconych wymiarach
+                Bitmap rotatedBitmap = new Bitmap(bitmap.Height, bitmap.Width); 
                 Graphics gfx = Graphics.FromImage(rotatedBitmap);
-                gfx.Clear(Color.White); // Wyczyść nowy obrazek tłem w kolorze białym
+                gfx.Clear(Color.White); 
                 gfx.TranslateTransform((float)bitmap.Height / 2, (float)bitmap.Width / 2);
                 gfx.RotateTransform(90);
                 gfx.TranslateTransform(-(float)bitmap.Width / 2, -(float)bitmap.Height / 2);
@@ -61,6 +70,20 @@ namespace ProgramowanieWizualne_17_04
                 bitmap.Dispose();
             
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Bitmap bitmap = new Bitmap(pictureBox1.Image);
+            Bitmap flippedBitmap = new Bitmap(bitmap.Width, bitmap.Height); 
+            Graphics gfx = Graphics.FromImage(flippedBitmap);
+            gfx.Clear(Color.White); 
+            gfx.ScaleTransform(1, -1); 
+            gfx.TranslateTransform(0, -bitmap.Height); 
+            gfx.DrawImage(bitmap, new Point(0, 0));
+            pictureBox1.Image = flippedBitmap;
+            gfx.Dispose();
+            bitmap.Dispose();
         }
     }
 }
