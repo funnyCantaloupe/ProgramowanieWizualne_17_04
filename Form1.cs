@@ -25,14 +25,77 @@ namespace ProgramowanieWizualne_17_04
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog of = new OpenFileDialog();
-            //For any other formats
-            of.Filter = "Image Files (*.bmp;*.jpg;*.jpeg,*.png)|*.BMP;*.JPG;*.JPEG;*.PNG";
+            
+            of.Filter = "Image Files (*.bmp)|*.BMP";
             if (of.ShowDialog() == DialogResult.OK)
             {
                 pictureBox1.ImageLocation = of.FileName;
                 pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             }
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+            if (pictureBox1.Image == null)
+            {
+                return;
+            }
+
+            
+            Bitmap bitmap = new Bitmap(pictureBox1.Image);
+
+            
+            for (int x = 0; x < bitmap.Width; x++)
+            {
+                for (int y = 0; y < bitmap.Height; y++)
+                {
+                    Color pixelColor = bitmap.GetPixel(x, y);
+
+                    
+                    if (pixelColor.R >= 0 && pixelColor.R <= 100 &&
+                        pixelColor.G >= 100 && pixelColor.G <= 255 &&
+                        pixelColor.B >= 0 && pixelColor.B <= 100)
+                    {
+                        
+                    }
+                    else
+                    {
+                        bitmap.SetPixel(x, y, Color.FromArgb(0, pixelColor));
+                    }
+                }
+            }
+
+            pictureBox1.Image = bitmap;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                return;
+            }
+
+
+            Bitmap bitmap = new Bitmap(pictureBox1.Image);
+
+
+            for (int x = 0; x < bitmap.Width; x++)
+            {
+                for (int y = 0; y < bitmap.Height; y++)
+                {
+                    Color pixelColor = bitmap.GetPixel(x, y);
+
+                    int newR = 255 - pixelColor.R;
+                    int newG = 255 - pixelColor.G;
+                    int newB = 255 - pixelColor.B;
+
+                    bitmap.SetPixel(x, y, Color.FromArgb(pixelColor.A, newR, newG, newB));
+                }
+            }
+
+            pictureBox1.Image = bitmap;
         }
     }
 }
