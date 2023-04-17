@@ -24,32 +24,15 @@ namespace ProgramowanieWizualne_17_04
 
         private void button1_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new OpenFileDialog())
+            OpenFileDialog of = new OpenFileDialog();
+            //For any other formats
+            of.Filter = "Image Files (*.bmp;*.jpg;*.jpeg,*.png)|*.BMP;*.JPG;*.JPEG;*.PNG";
+            if (of.ShowDialog() == DialogResult.OK)
             {
-                dlg.Title = "Open Image";
-                dlg.Filter = "bmp files (*.bmp)|*.bmp";
-
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    PictureBox PictureBox1 = new PictureBox();
-                    PictureBox1.Image = new Bitmap(dlg.FileName);
-                }
+                pictureBox1.ImageLocation = of.FileName;
+                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             }
-            
-            using (OpenFileDialog dlg = new OpenFileDialog())
-            {
-                dlg.Title = "Open Image";
-                dlg.Filter = "bmp files (*.bmp)|*.bmp";
 
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    PictureBox PictureBox1 = new PictureBox();
-                    PictureBox1.Image = new Bitmap(dlg.FileName);
-
-                    this.Controls.Add(PictureBox1);
-                }
-            }
-            
         }
     }
 }
